@@ -6,9 +6,10 @@ import {
   Route,
   Link,
   useHistory,
+  Redirect,
 } from 'react-router-dom';
 
-import Login from './pages/Login';
+import LoginAmazonTurk from './pages/LoginAmazonTurk';
 import Viewer from './pages/Viewer';
 import CrossDoc from './pages/CrossDoc';
 import Documents from './pages/Documents';
@@ -21,50 +22,24 @@ import NLPViewer from '../nlpviewer';
 import groupPlugin from '../plugins/Group';
 import AllCrossDocs from "./pages/AllCrossDocs";
 
-function App() {
+function AppAmazonTurk() {
+  let loggedIn = false;
   return (
     <Router>
       <div>
         <header className="layout_header">
           <span>NLP Viewer</span>
-
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">All documents</Link>
-              </li>
-              <li>
-                <Link to="/crossdocs">All cross doc references</Link>
-              </li>
-              <li>
-                <Link to="/users">All Users</Link>
-              </li>
-            </ul>
-          </nav>
-
-          <Logout />
         </header>
 
         <Switch>
+          <Route exact path="/" render={() => (
+                  <Redirect to="/login"/>
+          )}/>
           <Route path="/login">
-            <Login />
-          </Route>
-
-          <Route path="/users">
-            <Users />
-          </Route>
-
-          <Route path="/documents/:id">
-            <Viewer />
+            <LoginAmazonTurk />
           </Route>
           <Route path="/crossdocs/:id">
             <CrossDoc />
-          </Route>
-          <Route path="/crossdocs">
-            <AllCrossDocs />
-          </Route>
-          <Route path="/">
-            <Documents />
           </Route>
         </Switch>
       </div>
@@ -93,7 +68,7 @@ function Logout() {
   return <button onClick={() => handleLogout()}>logout</button>;
 }
 
-let EntryComponent = App;
+let EntryComponent = AppAmazonTurk;
 
 if (process.env.REACT_APP_IS_DEMO === ('true' as any)) {
   EntryComponent = ViewWithDemoData;

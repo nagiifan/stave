@@ -3,6 +3,17 @@ interface APIDocument {
   textPack: string;
   ontology: string;
 }
+interface APICrossDocPack{
+  id: string;
+  textPack: string;
+  ontology: string;
+}
+interface APICrossDoc {
+  crossDocPack:APICrossDocPack;
+  _parent: APIDocument;
+  _child: APIDocument;
+  nextCrossDocId : string;
+}
 
 export function fetchDocuments(): Promise<any> {
   return fetch(`/api/documents`).then(r => r.json());
@@ -61,6 +72,8 @@ export function createUser(name: string, password: string) {
   }).then(r => r.json());
 }
 
+
+
 export function addAnnotation(documentId: string, data: any) {
   return postData(`/api/documents/${documentId}/annotations/new`, {
     data,
@@ -103,6 +116,7 @@ export function deleteLink(documentId: string, linkId: string) {
   return postData(`/api/documents/${documentId}/links/${linkId}/delete`, {});
 }
 
+
 export function login(name: string, password: string) {
   return postData(`/api/login`, {
     name,
@@ -134,6 +148,37 @@ async function postData(url = '', data = {}) {
     return response;
   }
 }
+
+
+export function loginTurk(turkID: string) {
+  return postData(`/api/login-amazon-turk`, {
+    turkID,
+  }).then(r=>r.json());
+}
+
+export function addCrossLink(crossDocID: string, data: any) {
+  return postData(`/api/crossdocs/${crossDocID}/links/new`, {
+    data,
+  }).then(r => r.json());
+}
+
+export function updateCrossLink(crossDocID: string, data: any) {
+  return postData(`/api/crossdocs/${crossDocID}/links/update`, {
+    data,
+  }).then(r => r.json());;
+}
+export function deleteCrossLink(crossDocID: string, linkID:string) {
+  return postData(`/api/crossdocs/${crossDocID}/links/${linkID}/delete`)
+    .then(r => r.json());
+}
+
+export function fetchCrossDocs(): Promise<any> {
+  return fetch(`/api/crossdocs`).then(r => r.json());
+}
+export function fetchCrossDoc(id: string): Promise<APICrossDoc>  {
+  return fetch(`/api/crossdocs/${id}`).then(r => r.json());
+}
+
 
 let w: any = window;
 
