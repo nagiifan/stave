@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import clsx from 'clsx';
 import { signup } from '../lib/api';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -77,10 +76,7 @@ function SignUp() {
       weightRange: '',
       showPassword: false,
     });
-  
-    const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+
     const handleClickShowPassword = () => {
       setValues({ ...values, showPassword: !values.showPassword });
     };
@@ -115,11 +111,11 @@ function SignUp() {
                   required
                   >Your Password</InputLabel>
                   <OutlinedInput
-                    id="outlined-adornment-password"
+                    id="password"
                     label="Your Password"
                     type={values.showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    onChange={handleChange('password')}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
