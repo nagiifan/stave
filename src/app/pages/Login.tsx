@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { login } from '../lib/api';
 import { useHistory } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 function Login() { 
   const [error, setError] = useState<string>('');
@@ -25,86 +21,56 @@ function Login() {
       });
   }
 
-  function redirectSignup(e: any) {
-    history.push("/signup") 
-  }
+  const [passwordShown, setPasswordShown] = useState(false);
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
 
-  const useStyles = makeStyles((theme) => ({
-    paper: {
-      marginTop: theme.spacing(15),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-  }));
+  const eye = <FontAwesomeIcon icon={faEye} />;
 
-    const classes = useStyles();
+  // this function is temporarily suspended:
+  // function redirectSignup(e: any) {
+  //   history.push("/signup") 
+  // }
 
   return (
-      <Container component="main" maxWidth="xs">
-        <div className={classes.paper}>
-          <img alt='stave logo' src={process.env.PUBLIC_URL + '/Stave-dark-text@1x.png'}/>
-          <form className={classes.form} noValidate onSubmit={handleLogin}>
+    <div className="container_login">
+      <div className="card_login">
+        <img className="img_logo" alt='stave logo' src={process.env.PUBLIC_URL + '/Stave-graphic@2x.png'}/>
+        <div className="box">
+          <h1 style={{color: "#05668D"}}>Sign In</h1>
+          <form noValidate onSubmit={handleLogin}>
+            <div className="form-wrapper1">
+              <input className="input" 
+                onChange={e => setUsername(e.target.value)}
+                value={username}
+                placeholder="Username"
+              />
+              {" "}
+            </div>
+            <div className="form-wrapper1">
+              <input className="input" 
+                onChange={e => setPassword(e.target.value)}
+                value={password}
+                placeholder="Password"
+                type={passwordShown ? "text" : "password"}
+              />
+              <i onClick={togglePasswordVisiblity}>{eye}</i>{" "}
+            </div>
 
-                <TextField
-                  onChange={e => setUsername(e.target.value)}
-                  value={username}
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Username"
-                  name="name"
-                  autoComplete="name"
-                  autoFocus
-                />
+          {error ? <div>{error}</div> : null}
 
-                <TextField
-                  onChange={e => setPassword(e.target.value)}
-                  type="password"
-                  value={password}
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="password"
-                  label="Password"
-                  name="password"
-                />
+          {/* // this function will be added in the future
+          <span style={{color: "#05668D"}}>Change Your Password?
+          </span> */}
 
-            {error ? <div>{error}</div> : null}
-
-            <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            >
+          <button className="button" onClick={handleLogin}>
               Sign In
-            </Button>
-
-            <Grid container>
-              <Grid item>
-                <Link 
-                  component="button"
-                  variant="body2"
-                  onClick={redirectSignup} >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
+          </button>
+        </form>
         </div>
-      </Container>
+      </div>
+    </div> 
   );
 }
 
