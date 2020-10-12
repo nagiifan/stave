@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {useDropzone, FileWithPath} from 'react-dropzone';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
 
 export interface DropUploadProp {
   fileLimit: number,  
@@ -32,6 +31,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin:15px;
   padding: 20px;
   border-width: 2px;
   border-radius: 2px;
@@ -90,18 +90,15 @@ function DropUpload({
 
   let action_button;
   if (fileActionButtonFunc && typeof(fileActionButtonFunc) == "function"){
-    action_button = <Button
+    action_button = <button 
+                className="buttonsmall"
                 onClick={() => {
                   fileActionButtonFunc(files);	
                   setFiles([] as FileWithPath[]);	
-                }}  
-                color="primary"
-                size="small" 
-                variant="contained"
-                disableElevation
+                }} 
               >
                 {fileActionButtonText}
-              </Button>
+              </button>
   }
 
   return (
@@ -110,11 +107,11 @@ function DropUpload({
         <input {...getInputProps()} />
         <p>{dropZoneText ? dropZoneText : "Drag 'n' drop your data here, or click to select it from a file browser."}</p>
       </Container>
-      <aside>
+      <aside style={{margin:"10px"}}>
         <h4>Documents to be added.</h4>
         <ul>{file_info}</ul>
       </aside>
-      <div>	{action_button} </div>
+      <div style={{width:"40%"}}>	{action_button} </div>
     </section>
   );
 }

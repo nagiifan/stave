@@ -61,10 +61,12 @@ export function createDocument(
 
 export function createProject(
   name: string,
-  ontology: string
+  intro: string,
+  ontology: string,
 ) {
   return postData(`/api/projects/new`, {
     name: name,
+    intro:intro,
     ontology: ontology,
   }).then(r => r.json());
 }
