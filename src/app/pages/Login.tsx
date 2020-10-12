@@ -38,7 +38,7 @@ function Login() {
       <div className="card_login">
         <img className="img_logo" alt='stave logo' src={process.env.PUBLIC_URL + '/Stave-graphic@2x.png'}/>
         <div className="box">
-          <h1 style={{color: "#05668D"}}>Sign In</h1>
+          <h1 style={{color: "#2274AA"}}>Sign In</h1>
           <form noValidate onSubmit={handleLogin}>
             <div className="form-wrapper1">
               <input className="input" 
