@@ -66,13 +66,6 @@ function Projects() {
     }
   }
 
-  function handleEdit() {
-    if (name && intro && ontology){
-      createProject(name, intro, ontology).then(() =>{
-        updateProjects();
-      });
-    }
-  }
 
   function handleDelete(id: string) {
     deleteProject(id).then(() => {
